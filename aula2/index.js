@@ -4,13 +4,13 @@
  * 2. Obter o endereço do usuário pelo id
  */
 
-function getUser() {
+function getUser(callback) {
     setTimeout(() => {
-        return {
+        return callback(null, {
             id: 1,
             name: "Aladin",
             birthDate: new Date()
-        }
+        })
     }, 1000)
 }
 
@@ -27,8 +27,15 @@ function getAdress(userID) {
 
 }
 
-const user = getUser()
-const phoneNumber = getPhone(user.id)
+// callback() só vai retornar os dados da requisição após o tempo da execução
 
-console.log(`User: ${user.name}`)
-console.log(`Phone number: ${phoneNumber.number}`)
+getUser(function solveUser(error, user) {
+    if (error) {
+        console.error("DEU RUIM em USUARIO", error)
+        return;
+    }
+})
+// const phoneNumber = getPhone(user.id)
+
+
+// console.log(`Phone number: ${phoneNumber.number}`)
