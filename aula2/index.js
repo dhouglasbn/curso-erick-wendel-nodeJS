@@ -9,6 +9,8 @@ function getUser() {
     // Quando der success -> RESOLVE FUNCTION
     return new Promise(function resolvePromise(resolve, reject) {
         setTimeout(() => {
+        // return reject(new Error("DEU RUIM DE VERDADE!"))
+
         return resolve({
             id: 1,
             name: "Aladin",
@@ -20,13 +22,15 @@ function getUser() {
     
 }
 
-function getPhone(userId, callback) {
-    setTimeout(() => {
-        return callback(null, {
-            number: "91199-0002",
-            ddd: 83
-        })
-    }, 2000);
+function getPhone(userId) {
+    return new Promise(function resolvePromise(resolve, reject) {
+        setTimeout(() => {
+            return resolve({
+                number: "91199-0002",
+                ddd: 83
+            })
+        }, 2000);
+    })
 }
 
 function getAdress(userId, callback) {
@@ -42,7 +46,26 @@ function getAdress(userId, callback) {
 
 // Para manipular o erro usamos o .catch()
 
+// Conceito de PIPE: user -> phone -> phone
+
 const userPromise = getUser()
+
+    // manipulando o resolve(success) passando esse resultado para chamar a Promise getPhone
+    .then(function (user) {
+        return getPhone(user.id)
+
+            // o resultado de getPhone vai ser usado na resolve(success) de Phone
+            .then(function resolvePhone(result) {
+                // aqui eu vou retornar no primeiro then o result alterado para ser passado a frente
+                return {
+                    user: {
+                        name: user.name,
+                        id: user.id
+                    },
+                    phone: result
+                }
+            })
+    })
     .then(function (result) {
         console.log("resultado", result)
     })
