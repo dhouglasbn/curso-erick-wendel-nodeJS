@@ -4,6 +4,11 @@
  * 2. Obter o endereço do usuário pelo id
  */
 
+// importamos um módulo interno do node.js
+
+const util = require("util")
+const getAdressAsync = util.promisify(getAdress)
+
 function getUser() {
     // Quando der ruim -> REJECT FUNCTION
     // Quando der success -> RESOLVE FUNCTION
@@ -67,7 +72,21 @@ const userPromise = getUser()
             })
     })
     .then(function (result) {
-        console.log("resultado", result)
+        const address = getAdressAsync(result.user.id)
+        return address.then(function resolveAdress(address_result) {
+            return {
+                user: result.user,
+                phone: result.phone,
+                address: address_result
+            }
+        });
+    })
+    .then(function (result) {
+        console.log(`
+        Nome: ${result.user.name}
+        Endereço: ${result.address.street}, ${result.address.number}
+        Telefone: (${result.phone.ddd}) ${result.phone.number}
+        `)
     })
     .catch(function (error) {
         console.error("DEU RUIM", error)
