@@ -4,14 +4,20 @@
  * 2. Obter o endereço do usuário pelo id
  */
 
-function getUser(callback) {
-    setTimeout(() => {
-        return callback(null, {
+function getUser() {
+    // Quando der ruim -> REJECT FUNCTION
+    // Quando der success -> RESOLVE FUNCTION
+    return new Promise(function resolvePromise(resolve, reject) {
+        setTimeout(() => {
+        return resolve({
             id: 1,
             name: "Aladin",
             birthDate: new Date()
         })
     }, 1000)
+    })
+
+    
 }
 
 function getPhone(userId, callback) {
@@ -32,36 +38,44 @@ function getAdress(userId, callback) {
     }, 2000);
 }
 
+// Para manipular o sucesso usamos .then()
+
+// Para manipular o erro usamos o .catch()
+
+const userPromise = getUser()
+    .then(function (result) {
+        console.log(result)
+    })
+    .catch(function (error) {
+        console.error("DEU RUIM", error)
+    })
+
 // callback() só vai retornar os dados da requisição após o tempo da execução
 
-getUser(function solveUser(error, user) {
-    // null || "" || 0 === false
-    if (error) {
-        console.error("DEU RUIM em USUARIO", error)
-        return;
-    }
+// getUser(function solveUser(error, user) {
+//     // null || "" || 0 === false
+//     if (error) {
+//         console.error("DEU RUIM em USUARIO", error)
+//         return;
+//     }
 
-    getPhone(user.id, function solvePhone(error1, phone) {
-        if (error1) {
-            console.error("DEU RUIM em TELEFONE", error1)
-            return;            
-        }
+//     getPhone(user.id, function solvePhone(error1, phone) {
+//         if (error1) {
+//             console.error("DEU RUIM em TELEFONE", error1)
+//             return;            
+//         }
 
-        getAdress(user.id, function solveAdress(error2, address) {
-            if (error2) {
-                console.error("DEU RUIM em ENDERECO", error2)
-                return;            
-            }
+//         getAdress(user.id, function solveAdress(error2, address) {
+//             if (error2) {
+//                 console.error("DEU RUIM em ENDERECO", error2)
+//                 return;            
+//             }
 
-            console.log(`
-            Nome: ${user.name}
-            Endereço: ${address.street}, ${address.number}
-            Telefone: (${phone.ddd}) ${phone.number}
-            `)
-        })
-    })
-})
-// const phoneNumber = getPhone(user.id)
-
-
-// console.log(`Phone number: ${phoneNumber.number}`)
+//             console.log(`
+//             Nome: ${user.name}
+//             Endereço: ${address.street}, ${address.number}
+//             Telefone: (${phone.ddd}) ${phone.number}
+//             `)
+//         })
+//     })
+// })
