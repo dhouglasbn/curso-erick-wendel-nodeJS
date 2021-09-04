@@ -44,7 +44,7 @@ function getAdress(userId, callback) {
 
 const userPromise = getUser()
     .then(function (result) {
-        console.log(result)
+        console.log("resultado", result)
     })
     .catch(function (error) {
         console.error("DEU RUIM", error)
