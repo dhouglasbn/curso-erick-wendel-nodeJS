@@ -12,12 +12,12 @@ async function main() {
         // }
         // console.timeEnd("for")
 
-        console.time("for")
-        for( let index = 0; index <= result.results.length - 1; index++ ) {
+        console.time("forin")
+        for( let index in result.results ) {
             const person = result.results[index]
             names.push( person.name )
         }
-        console.timeEnd("for")
+        console.timeEnd("forin")
         
         console.log(`names: `, names);
     } catch (error) {
