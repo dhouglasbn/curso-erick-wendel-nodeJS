@@ -5,12 +5,12 @@ async function main() {
         const result = await service.getPeople("a")
         const names = []
         
-        // console.time("for")
-        // for( let index = 0; index <= result.results.length - 1; index++ ) {
-        //     const person = result.results[index]
-        //     names.push( person.name )
-        // }
-        // console.timeEnd("for")
+        console.time("for")
+        for( let index = 0; index <= result.results.length - 1; index++ ) {
+            const person = result.results[index]
+            names.push( person.name )
+        }
+        console.timeEnd("for")
 
         console.time("forin")
         for( let index in result.results ) {
@@ -19,6 +19,13 @@ async function main() {
         }
         console.timeEnd("forin")
         
+
+        console.time("forof")
+        for( person of result.results ) {
+            names.push( person.name )
+        }
+        console.timeEnd("forof")
+
         console.log(`names: `, names);
     } catch (error) {
         console.error("erro interno", error);
