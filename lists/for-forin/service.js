@@ -7,10 +7,6 @@ async function getPeople(name) {
     return response.data;
 }
 
-getPeople("r2")
-    .then(result => {
-        console.log("resultado", result);
-    })
-    .catch(error => {
-        console.error("DEU RUIM", error);
-    })
+module.exports = {
+    getPeople
+}
