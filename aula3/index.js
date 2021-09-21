@@ -1,7 +1,5 @@
-<<<<<<< HEAD:aula3/index.js
+  
 // aula de promises
-=======
->>>>>>> modulo01:aula2/index.js
 
 /**
  * 0. Obter o usuário
@@ -9,23 +7,38 @@
  * 2. Obter o endereço do usuário pelo id
  */
 
- function getUser(callback) {
-    setTimeout(() => {
-        return callback(null, {
+// importamos um módulo interno do node.js
+
+const util = require("util")
+const getAdressAsync = util.promisify(getAdress)
+
+function getUser() {
+    // Quando der ruim -> REJECT FUNCTION
+    // Quando der success -> RESOLVE FUNCTION
+    return new Promise(function resolvePromise(resolve, reject) {
+        setTimeout(() => {
+        // return reject(new Error("DEU RUIM DE VERDADE!"))
+
+        return resolve({
             id: 1,
             name: "Aladin",
             birthDate: new Date()
         })
     }, 1000)
+    })
+
+    
 }
 
-function getPhone(userId, callback) {
-    setTimeout(() => {
-        return callback(null, {
-            number: "91199-0002",
-            ddd: 83
-        })
-    }, 2000);
+function getPhone(userId) {
+    return new Promise(function resolvePromise(resolve, reject) {
+        setTimeout(() => {
+            return resolve({
+                number: "91199-0002",
+                ddd: 83
+            })
+        }, 2000);
+    })
 }
 
 function getAdress(userId, callback) {
@@ -37,36 +50,77 @@ function getAdress(userId, callback) {
     }, 2000);
 }
 
+// Para manipular o sucesso usamos .then()
+
+// Para manipular o erro usamos o .catch()
+
+// Conceito de PIPE: user -> phone -> phone
+
+const userPromise = getUser()
+
+    // manipulando o resolve(success) passando esse resultado para chamar a Promise getPhone
+    .then(function (user) {
+        return getPhone(user.id)
+
+            // o resultado de getPhone vai ser usado na resolve(success) de Phone
+            .then(function resolvePhone(result) {
+                // aqui eu vou retornar no primeiro then o result alterado para ser passado a frente
+                return {
+                    user: {
+                        name: user.name,
+                        id: user.id
+                    },
+                    phone: result
+                }
+            })
+    })
+    .then(function (result) {
+        const address = getAdressAsync(result.user.id)
+        return address.then(function resolveAdress(address_result) {
+            return {
+                user: result.user,
+                phone: result.phone,
+                address: address_result
+            }
+        });
+    })
+    .then(function (result) {
+        console.log(`
+        Nome: ${result.user.name}
+        Endereço: ${result.address.street}, ${result.address.number}
+        Telefone: (${result.phone.ddd}) ${result.phone.number}
+        `)
+    })
+    .catch(function (error) {
+        console.error("DEU RUIM", error)
+    })
+
 // callback() só vai retornar os dados da requisição após o tempo da execução
 
-getUser(function solveUser(error, user) {
-    // null || "" || 0 === false
-    if (error) {
-        console.error("DEU RUIM em USUARIO", error)
-        return;
-    }
+// getUser(function solveUser(error, user) {
+//     // null || "" || 0 === false
+//     if (error) {
+//         console.error("DEU RUIM em USUARIO", error)
+//         return;
+//     }
 
-    getPhone(user.id, function solvePhone(error1, phone) {
-        if (error1) {
-            console.error("DEU RUIM em TELEFONE", error1)
-            return;            
-        }
+//     getPhone(user.id, function solvePhone(error1, phone) {
+//         if (error1) {
+//             console.error("DEU RUIM em TELEFONE", error1)
+//             return;            
+//         }
 
-        getAdress(user.id, function solveAdress(error2, address) {
-            if (error2) {
-                console.error("DEU RUIM em ENDERECO", error2)
-                return;            
-            }
+//         getAdress(user.id, function solveAdress(error2, address) {
+//             if (error2) {
+//                 console.error("DEU RUIM em ENDERECO", error2)
+//                 return;            
+//             }
 
-            console.log(`
-            Nome: ${user.name}
-            Endereço: ${address.street}, ${address.number}
-            Telefone: (${phone.ddd}) ${phone.number}
-            `)
-        })
-    })
-})
-// const phoneNumber = getPhone(user.id)
-
-
-// console.log(`Phone number: ${phoneNumber.number}`)
+//             console.log(`
+//             Nome: ${user.name}
+//             Endereço: ${address.street}, ${address.number}
+//             Telefone: (${phone.ddd}) ${phone.number}
+//             `)
+//         })
+//     })
+// })
