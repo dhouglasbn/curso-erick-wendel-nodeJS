@@ -1,5 +1,16 @@
 const service = require("./service");
 
+Array.prototype.myMap = function (callback) {
+    const newMappedArray = [];
+
+    for ( let index = 0; index <= this.length - 1; index++ ) {
+        const result = callback(this[index], index)
+        newMappedArray.push(result)
+    }
+
+    return newMappedArray;
+}
+
 async function main() {
     try {
         const result = await service.getPeople("a");
@@ -15,7 +26,8 @@ async function main() {
         //     return person.name
         // })
 
-        const names = result.results.map(person => person.name)
+        // const names = result.results.myMap((person, index) => `${index}${person.name}`)
+        const names = result.results.myMap(( person, index ) => person.name )
         console.timeEnd("map")
 
         console.log("names: ", names);
