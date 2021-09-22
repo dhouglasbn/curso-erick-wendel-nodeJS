@@ -1,9 +1,12 @@
 const service = require("./service");
 
+// declarando minha função map para ser usada em arrays
+// para isso não pode ser declarada usando arrow function
 Array.prototype.myMap = function (callback) {
     const newMappedArray = [];
 
     for ( let index = 0; index <= this.length - 1; index++ ) {
+        // a função que irei executar qnd my map for usada, passarei o item e seu index
         const result = callback(this[index], index)
         newMappedArray.push(result)
     }
@@ -26,7 +29,7 @@ async function main() {
         //     return person.name
         // })
 
-        // const names = result.results.myMap((person, index) => `${index}${person.name}`)
+        // usando minha função map
         const names = result.results.myMap(( person, index ) => person.name )
         console.timeEnd("map")
 
