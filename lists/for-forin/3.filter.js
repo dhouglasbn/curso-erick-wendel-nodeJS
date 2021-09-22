@@ -31,6 +31,10 @@ async function main() {
         //     return result;
         // })
 
+        // filtrando as pessoas que forem da família lars
+        const larsFamily = results.myFilter((item, index, array) => 
+            item.name.toLowerCase().indexOf("lars") !== -1 )
+
         // retornando só o nome de cada pessoa
         const names = larsFamily.map(person => person.name);
 
