@@ -1,4 +1,5 @@
 const { deepEqual, ok } = require("assert");
+const { list } = require("./database");
 const database = require("./database");
 
 const DEFAUL_ITEM_REGISTER = {
@@ -9,7 +10,10 @@ const DEFAUL_ITEM_REGISTER = {
 
 describe("Suite de manipulação de Heróis", () => {
     before(async () => {
-        await database.register(DEFAUL_ITEM_REGISTER);
+
+        // se não tiver nenhum item, ele vai registrar um
+        const isThereSomeItem = await database.list();
+        !isThereSomeItem.length && await database.register(DEFAUL_ITEM_REGISTER);
     })
 
     it("Deve pesquisar heróis usando arquivos", async () => {
