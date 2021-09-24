@@ -56,13 +56,13 @@ class Database {
         }
 
         // dados que já existiam em heroes.json + o novo herói
-        const finalData = {
+        const finalData = [
             ...data,
             heroWithId
-        }
+        ]
 
         const result = await this.writeFile(finalData)
-        return result;  
+        return result;
     }
 
     async list(id) {

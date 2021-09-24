@@ -8,6 +8,9 @@ const DEFAUL_ITEM_REGISTER = {
 }
 
 describe("Suite de manipulação de Heróis", () => {
+    before(async () => {
+        await database.register(DEFAUL_ITEM_REGISTER);
+    })
 
     it("Deve pesquisar heróis usando arquivos", async () => {
         const expected = DEFAUL_ITEM_REGISTER;
@@ -19,11 +22,15 @@ describe("Suite de manipulação de Heróis", () => {
         deepEqual(result, expected)
     })
 
-    // it("deve cadastrar um herói, usando arquivos", async() => {
-    //     const expected = DEFAUL_ITEM_REGISTER;
+    it("deve cadastrar um herói, usando arquivos", async() => {
+        const expected = DEFAUL_ITEM_REGISTER;
+
+        const result = await database.register(DEFAUL_ITEM_REGISTER);
+        const [actual] = await database.list(DEFAUL_ITEM_REGISTER.id);
+        console.log(result);
+        console.log(actual);
 
 
-
-    //     ok(null, expected)
-    // })
+        ok(actual, expected)
+    })
 })
