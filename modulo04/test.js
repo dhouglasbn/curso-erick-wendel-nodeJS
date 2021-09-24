@@ -8,11 +8,17 @@ const DEFAUL_ITEM_REGISTER = {
 
 describe("Suite de manipulação de Heróis", () => {
 
-    it("deve cadastrar um herói, usando arquivos", async() => {
+    it("Deve pesquisar heróis usando arquivos", async () => {
         const expected = DEFAUL_ITEM_REGISTER;
-
-
 
         ok(null, expected)
     })
+
+    // it("deve cadastrar um herói, usando arquivos", async() => {
+    //     const expected = DEFAUL_ITEM_REGISTER;
+
+
+
+    //     ok(null, expected)
+    // })
 })
