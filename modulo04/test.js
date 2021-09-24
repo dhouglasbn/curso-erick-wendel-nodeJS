@@ -3,9 +3,9 @@ const { list } = require("./database");
 const database = require("./database");
 
 const DEFAUL_ITEM_REGISTER = {
+    id: 1,
     name: "Flash",
-    power: "Speed",
-    id: 1
+    power: "Speed"
 }
 
 describe("Suite de manipulação de Heróis", () => {
@@ -27,14 +27,15 @@ describe("Suite de manipulação de Heróis", () => {
     })
 
     it("deve cadastrar um herói, usando arquivos", async() => {
-        const expected = DEFAUL_ITEM_REGISTER;
+        const databaseItems = await database.list()
+        const expected = [...databaseItems, DEFAUL_ITEM_REGISTER];
 
-        const result = await database.register(DEFAUL_ITEM_REGISTER);
-        const [actual] = await database.list(DEFAUL_ITEM_REGISTER.id);
-        console.log(result);
-        console.log(actual);
+        await database.register(DEFAUL_ITEM_REGISTER);
+        const databaseAfterRegister = await database.list()
 
+        console.log(expected);
+        console.log(databaseAfterRegister);
 
-        ok(actual, expected)
+        ok(databaseAfterRegister, expected)
     })
 })
