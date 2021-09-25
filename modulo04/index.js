@@ -21,33 +21,46 @@ async function main() {
 
     try {
         if(options.register) {
+            // id vem com undefined, aqui eu tiro ele pra dps ser substituido pelo Date.now()
             delete hero.id;
+
+            // tentando cadastrar herói
             const result = await Database.register(hero);
 
+            // se deu ruim e retornou false, mando mensagem de erro
             if (!result) {
                 console.error("Couldn't register hero");
                 return;
-            } 
+            }
 
+            // se todo ocorreu bem, mando mensagem de sucesso
             console.log("Hero registered successfuly!");
         }
 
         if(options.list) {
+            // chamando todos os itens da db
             const result = await Database.list();
 
+            // dando log na listagem
             console.log(result);
             return;
         }
 
+
         if(options.delete) {
+            // tentando deletar herói
             const result = await Database.delete(hero.id);
             
+
+            // se alguma coisa deu ruim e ele retornou false, mando mensagem de erro
             if(!result) {
                 console.error("Couldn't delete Hero");
                 return;
             }
 
+            // se tudo ocorreu bem, mando mensagem de sucesso
             console.log("Hero removed successfuly!");
+            return;
         }
     } catch (error) {
         console.error("DEU RUIM", error);
