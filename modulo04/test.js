@@ -26,7 +26,7 @@ describe("Suite de manipulação de Heróis", () => {
         deepEqual(result, expected)
     })
 
-    it("deve cadastrar um herói, usando arquivos", async() => {
+    it("Deve cadastrar um herói, usando arquivos", async() => {
         
         // pegando a db antes de qualquer operação
         const databaseItems = await database.list()
@@ -42,5 +42,16 @@ describe("Suite de manipulação de Heróis", () => {
 
         // o teste será bem sucedido se a nova db for igual ao resultado esperado
         ok(databaseAfterRegister, expected)
+    })
+
+    it("Deve remover um herói pelo seu id", async () => {
+        // ao final do database.delete eu vou dar um database.writeFile, que se for bem sucedido retorna true
+
+        // espera-se que seja retornado um true
+        const expected = true;
+
+        // dando delete no item e se der tudo certo true vai ser retornado ao meu
+        const result = await database.delete(DEFAUL_ITEM_REGISTER.id)
+        deepEqual(result, expected)
     })
 })

@@ -71,7 +71,26 @@ class Database {
         return filterredData;
     }
 
+    async delete(id) {
+        if(!id) {
+            return this.writeFile([]);
+        }
 
+        // listagem de tudo da db
+        const data = await this.getFileData()
+
+        // tentando encontrar o item, se houver vai retornar o index na db
+        const index = data.findIndex(item => item.id === parseInt(id))
+
+        // se não encontrar na db
+        if(index === -1) {
+            throw Error("O herói informado não existe")
+        }
+
+        // a partir do meu index, remover 1 item
+        data.splice(index, 1);
+        return this.writeFile(data);
+    }
 }
 
 module.exports = new Database()
