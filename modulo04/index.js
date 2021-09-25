@@ -11,6 +11,7 @@ async function main() {
         .option("-p, --power [value]", "Hero's Power")
         
         .option("-r, --register", "Register a Hero")
+        .option("-l, --list", "List a Heroes")
         .parse(process.argv);
 
     const hero = new Hero(options)
