@@ -30,6 +30,12 @@ class Database {
 
     async register(hero) {
         const data = await this.getFileData()
+
+        if (!hero.id) {
+            const length = data.length
+            hero.id = length + 1;
+        }
+
         const id = hero.id <= 2 ? hero.id : Date.now();
 
         /**
