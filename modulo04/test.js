@@ -62,20 +62,27 @@ describe("Suite de manipulação de Heróis", () => {
     })
 
     it("Deve atualizar um herói pelo seu id", async () => {
+        // pegando os dados de DEFAULT_ITEM_UPDATE, name e power vão ser alterados
+        // esse é meu resultado esperado
         const expected = {
             ...DEFAUL_ITEM_UPDATE,
             name: "Batman",
             power: "Money"
         }
 
+        // os dados que quero alterar
         const newData = {
             name: "Batman",
             power: "Money"
         }
 
+        // chamando o update, passando id e os dados para atualizar
         await database.update(DEFAUL_ITEM_UPDATE.id, newData);
+
+        // pegando o primeiro item que tiver o id do meu herói que ta sendo modificado
         const [result] = await database.list(DEFAUL_ITEM_UPDATE.id)
 
+        // o result deve ser igual minha expected
         deepEqual(result, expected)
     })
 })
