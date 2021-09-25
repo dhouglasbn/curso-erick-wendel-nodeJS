@@ -21,6 +21,7 @@ async function main() {
 
     try {
         if(options.register) {
+            delete hero.id;
             const result = await Database.register(hero);
 
             if (!result) {
