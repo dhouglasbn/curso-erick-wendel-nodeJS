@@ -91,6 +91,29 @@ class Database {
         data.splice(index, 1);
         return this.writeFile(data);
     }
+
+    async update(id, updates) {
+        const data = await this.getFileData();
+        const index = data.findIndex(item => item.id === parseInt(id));
+
+        if(index === -1) {
+            throw Error("O herói informado não existe!");
+        }
+
+        const current = data[index];
+        const updatedObject = {
+            ...current,
+            ...updates
+        }
+
+        // remover 1 item a partir do index
+        data.splice(index, 1);
+
+        return await this.writeFile([
+            ...data,
+            updatedObject
+        ])
+    }
 }
 
 module.exports = new Database()

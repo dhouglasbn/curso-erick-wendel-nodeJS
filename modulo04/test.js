@@ -8,6 +8,12 @@ const DEFAUL_ITEM_REGISTER = {
     power: "Speed"
 }
 
+const DEFAUL_ITEM_UPDATE = {
+    id: 2,
+    name: "Green Lantern",
+    power: "Ring's Energy"
+}
+
 describe("Suite de manipulação de Heróis", () => {
     before(async () => {
 
@@ -41,7 +47,7 @@ describe("Suite de manipulação de Heróis", () => {
         const databaseAfterRegister = await database.list()
 
         // o teste será bem sucedido se a nova db for igual ao resultado esperado
-        ok(databaseAfterRegister, expected)
+        deepEqual(databaseAfterRegister, expected)
     })
 
     it("Deve remover um herói pelo seu id", async () => {
@@ -52,6 +58,24 @@ describe("Suite de manipulação de Heróis", () => {
 
         // dando delete no item e se der tudo certo true vai ser retornado ao meu
         const result = await database.delete(DEFAUL_ITEM_REGISTER.id)
+        deepEqual(result, expected)
+    })
+
+    it("Deve atualizar um herói pelo seu id", async () => {
+        const expected = {
+            ...DEFAUL_ITEM_UPDATE,
+            name: "Batman",
+            power: "Money"
+        }
+
+        const newData = {
+            name: "Batman",
+            power: "Money"
+        }
+
+        await database.update(DEFAUL_ITEM_UPDATE.id, newData);
+        const [result] = await database.list(DEFAUL_ITEM_UPDATE.id)
+
         deepEqual(result, expected)
     })
 })
