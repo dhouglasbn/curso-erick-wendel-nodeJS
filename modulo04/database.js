@@ -93,14 +93,23 @@ class Database {
     }
 
     async update(id, updates) {
+        // pegando todos os itens da db
         const data = await this.getFileData();
+
+        // tentando encontrar o item q tem o id q foi passado e atribuir seu index da array
         const index = data.findIndex(item => item.id === parseInt(id));
 
+        // se não tem nenhum id ele retorna erro
         if(index === -1) {
             throw Error("O herói informado não existe!");
         }
 
+        // current é o item do banco de dados que eu achei
         const current = data[index];
+
+        // primeiro botar os itens do item da db e dps os itens de updates
+        // por updates vir depois de current e ter chaves com nomes iguais as de current
+        // no final só vai ter uma chave de cada nome repetido, q vai ser de updates
         const updatedObject = {
             ...current,
             ...updates
@@ -109,6 +118,7 @@ class Database {
         // remover 1 item a partir do index
         data.splice(index, 1);
 
+        // o herói atualizado vai pro final da db
         return await this.writeFile([
             ...data,
             updatedObject
