@@ -27,15 +27,20 @@ describe("Suite de manipulação de Heróis", () => {
     })
 
     it("deve cadastrar um herói, usando arquivos", async() => {
+        
+        // pegando a db antes de qualquer operação
         const databaseItems = await database.list()
+
+        // espera-se que o teste seja bem sucedido quando o novo herói estiver adicionado ao banco
         const expected = [...databaseItems, DEFAUL_ITEM_REGISTER];
 
+        // registrando o novo herói
         await database.register(DEFAUL_ITEM_REGISTER);
+
+        // listando novamente a db
         const databaseAfterRegister = await database.list()
 
-        console.log(expected);
-        console.log(databaseAfterRegister);
-
+        // o teste será bem sucedido se a nova db for igual ao resultado esperado
         ok(databaseAfterRegister, expected)
     })
 })
