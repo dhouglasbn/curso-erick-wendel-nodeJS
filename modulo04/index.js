@@ -13,7 +13,7 @@ async function main() {
         
         .option("-r, --register", "Register a Hero")
         .option("-l, --list", "List a Heroes")
-        .option("-r, --remove [value]", "Remove a Hero")
+        .option("-d, --delete [value]", "Remove a Hero")
         .parse(process.argv);
 
     const hero = new Hero(options)
@@ -39,7 +39,7 @@ async function main() {
             return;
         }
 
-        if(options.remove) {
+        if(options.delete) {
             const result = await Database.delete(hero.id);
             
             if(!result) {
