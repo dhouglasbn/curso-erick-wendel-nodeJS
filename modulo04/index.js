@@ -74,11 +74,13 @@ async function main() {
             // tentando atualizar herói
             const result = await Database.update(id, updateHero);
 
+            // Se ocorreu algum erro ao atualizar o herói, mando mensagem de erro
             if(!result) {
                 console.error("Couldn't update hero!");
                 return;
             }
 
+            // se deu tudo certo, mando menesagem de sucesso!
             console.log("Hero updated successfuly!");
             return;
         }
