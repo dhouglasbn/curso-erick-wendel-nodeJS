@@ -13,7 +13,8 @@ async function main() {
         
         .option("-r, --register", "Register a Hero")
         .option("-l, --list", "List a Heroes")
-        .option("-d, --delete [value]", "Remove a Hero")
+        .option("-d, --delete", "Remove a Hero")
+        .option("-u, --update [value]", "Update a Hero Information")
         .parse(process.argv);
 
     const hero = new Hero(options)
@@ -60,6 +61,25 @@ async function main() {
 
             // se tudo ocorreu bem, mando mensagem de sucesso
             console.log("Hero removed successfuly!");
+            return;
+        }
+
+        if(options.update) {
+            const id = parseInt(options.update);
+
+            // remover todas as chaves que estiverem como undefined | null
+            const data = JSON.stringify(hero);
+            const updateHero = JSON.parse(data);
+
+            // tentando atualizar herói
+            const result = await Database.update(id, updateHero);
+
+            if(!result) {
+                console.error("Couldn't update hero!");
+                return;
+            }
+
+            console.log("Hero updated successfuly!");
             return;
         }
     } catch (error) {
