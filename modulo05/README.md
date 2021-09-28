@@ -1,4 +1,4 @@
-# comandos para trabalhar com POSTGRES e MONGODb
+# Comandos para trabalhar com POSTGRES e MONGODb
 
 ## ---- DOCKER
 
