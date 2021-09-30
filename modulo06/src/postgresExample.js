@@ -14,8 +14,20 @@ const driver = new Sequelize(
     }
 )
 
-function main() {
-    const Heroes = driver.define("Heroes", {
+const driver = new Sequelize(
+    "heroes",
+    "dhouglas",
+    "minhasenhasecreta",
+    {
+        host:"localhost",
+        dialect: "postgres",
+        quoteIdentifiers: false,
+        operatorAliases: false
+    }
+)
+
+async function main() {
+    const Heroes = driver.define("heroes", {
         id: {
             type: Sequelize.INTEGER,
             required: true,
@@ -35,4 +47,17 @@ function main() {
         freezeTableName: false,
         timestamps: false
     })
+
+    await Heroes.sync()
+    await Heroes.create({
+        name: "Green Lantern",
+        power: "Ring's green energy"
+    })
+
+    const result = await Heroes.findAll({
+        raw: true
+    })
+    console.log("result", result);
 }
+
+main()
