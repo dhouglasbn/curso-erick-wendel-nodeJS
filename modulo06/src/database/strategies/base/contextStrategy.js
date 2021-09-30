@@ -1,28 +1,32 @@
-class NotImplementedException extends Error {
+const ICrud = require("../interfaces/interfaceCrud")
 
-    // o super chama a constructor da classe que a gente deu extends
-    // extends é herdar todas as variáveis e funções da classe referida
-    constructor() {
-        super("Not implemented Exception")
+class ContextStrategy extends ICrud {
+    constructor(strategy) {
+        super()
+        this._database = strategy
     }
-}
 
-class ICrud {
     create(item) {
-        throw new NotImplementedException()
+        return this._database.create(item)
     }
-
+a   
     read(query) {
-        throw new NotImplementedException()
+        return this._database.read(item)
     }
 
     update(id, item) {
-        throw new NotImplementedException()
+        return this._database.update(id, item)
     }
 
     delete(id) {
-        throw new NotImplementedException()
+        return this._database.delete(id)
+    }
+
+    isConnected() {
+        return this._database.isConnected()
     }
 }
+
+module.exports = ContextStrategy;
 
 module.exports = ICrud

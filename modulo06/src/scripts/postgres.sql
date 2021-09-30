@@ -1,0 +1,28 @@
+DROP TABLE IF EXISTS HEROES;
+
+CREATE TABLE HEROES {
+    ID INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY NOT NULL,
+    NAME TEXT NOT NULL,
+    POWER TEXT NOT NULL
+}
+
+-- create
+
+INSERT INTO HEROES (NAME, POWER)
+VALUES 
+    ('Flash', 'Speed'),
+    ('Aquaman', 'Talk to aquatic animals'),
+    ('Batman', 'Money')
+
+-- read
+
+SELECT * FROM HEROES;
+SELECT * FROM HEROES WHERE NAME='Flash';
+
+-- update
+UPDATE HEROES 
+SET NAME='Goku', POWER='Godd+'
+WHERE ID = 1;
+
+-- delete
+DELETE FROM HEROES WHERE ID=2;
