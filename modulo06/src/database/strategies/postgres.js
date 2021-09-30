@@ -19,7 +19,7 @@ class Postgres extends ICrud {
         }
     }
 
-    defineModel() {
+    async defineModel() {
         this._heroes = driver.define("heroes", {
             id: {
                 type: Sequelize.INTEGER,
@@ -40,6 +40,7 @@ class Postgres extends ICrud {
             freezeTableName: false,
             timestamps: false
         })
+        await Heroes.sync()
     }
 
     create(item) {
@@ -54,8 +55,7 @@ class Postgres extends ICrud {
             {
                 host:"localhost",
                 dialect: "postgres",
-                quoteIdentifiers: false,
-                operatorAliases: false
+                quoteIdentifiers: false
             }
         )
     }
