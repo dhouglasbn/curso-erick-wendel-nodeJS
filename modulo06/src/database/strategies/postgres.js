@@ -6,10 +6,17 @@ class Postgres extends ICrud {
         super()
         this._driver = null,
         this._heroes = null
+        this._connect()
     }
 
-    isConnected() {
-        
+    async isConnected() {
+        try {
+            await this._driver.authenticate();
+            return true
+        } catch (error) {
+            console.log("DEU RUIM", error);
+            return false;
+        }
     }
 
     defineModel() {

@@ -9,7 +9,7 @@ class ContextStrategy extends ICrud {
     create(item) {
         return this._database.create(item)
     }
-a   
+
     read(query) {
         return this._database.read(item)
     }
@@ -27,6 +27,4 @@ a
     }
 }
 
-module.exports = ContextStrategy;
-
-module.exports = ICrud
+module.exports = ContextStrategy, ICrud
