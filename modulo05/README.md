@@ -24,7 +24,7 @@ sudo docker run \
     --name postgres \
     -e POSTGRES_USER=dhouglas \
     -e POSTGRES_PASSWORD=minhasenhasecreta \
-    -e POSTGRES_DB=heroes \ => nome do banco
+    -e POSTGRES_DB=heroes \
     -p 5432:5432 \
     -d \
     postgres
@@ -42,8 +42,8 @@ sudo docker run \
 ```
 sudo docker run \
     --name adminer \
-    -p 8080:8080 \ => comando externo:porta interna
-    --link postgres:postgres \ => nome da imagem:serviço que ta rodando na minha maquina
+    -p 8080:8080 \
+    --link postgres:postgres \
     -d \
     adminer
 ```
