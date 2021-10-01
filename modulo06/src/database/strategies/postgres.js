@@ -47,8 +47,8 @@ class Postgres extends ICrud {
         return dataValues
     }
 
-    async read(hero = {}) {
-        return this._heroes.findAll({where: hero, raw: true});
+    async read(item = {}) {
+        return this._heroes.findAll({where: item, raw: true})
     }
 
     async connect() {

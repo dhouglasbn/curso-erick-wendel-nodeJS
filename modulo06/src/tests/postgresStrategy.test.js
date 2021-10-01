@@ -16,14 +16,20 @@ describe("Postgres Strategy", async() => {
     
 
     it("Should connect to PostgresSQL", async () => {
+        // chama um método sequelize authenticate 
+        // se toda a conexão estiver occorrendo bem retorna true
         const result = await context.isConnected()
         assert.equal(result, true)
     })
 
     it("Should register a hero", async () => {
+        // registra um herói lá na db e se der certo retorna os dados q mandei na requisição
         const result = await context.create(MOCK_REGISTER_HERO);
+
+        // meu mock não tem id
         delete result.id;
 
+        // comparando o mock com o resultado
         assert.deepEqual(result, MOCK_REGISTER_HERO);
     })
     
