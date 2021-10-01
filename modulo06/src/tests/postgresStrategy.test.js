@@ -26,4 +26,10 @@ describe("Postgres Strategy", async() => {
 
         assert.deepEqual(result, MOCK_REGISTER_HERO);
     })
+
+    it("Should list heroes", async() => {
+        const result = await context.read()
+        console.log(result);
+        // assert.deepEqual(result, MOCK_REGISTER_HERO)
+    });
 })
