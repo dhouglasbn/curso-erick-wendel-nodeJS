@@ -34,8 +34,13 @@ describe("Postgres Strategy", async() => {
     })
     
     it("Should list heroes", async () => {
+        // selecionando na db tudo que tem o name que estou passando
         const [result] = await context.read({name: MOCK_REGISTER_HERO.name})
+
+        // minha mock não tem id
         delete result.id
+
+        // comparando a mock com o resultado
         assert.deepEqual(result, MOCK_REGISTER_HERO)
     })
 })
